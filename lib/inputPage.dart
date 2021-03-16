@@ -1,3 +1,5 @@
+import 'package:beklenen_yasam_suresi/result.dart';
+import 'package:beklenen_yasam_suresi/userData.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -5,17 +7,26 @@ import 'genderIcon.dart';
 import 'myContainer.dart';
 
 class InputPage extends StatefulWidget {
+  static const String routhName = '/';
+
   @override
   _InputPageState createState() => _InputPageState();
 }
 
 class _InputPageState extends State<InputPage> {
-  double sigaraAdet = 0.0;
   double yapilanSporunGunSayisi = 0.0;
+  double sigaraAdet = 0.0;
   int boy = 170;
   int kilo = 70;
-
   String seciliCinsiyet;
+
+  /*var navParams = [
+    sigaraAdet,
+    yapilanSporunGunSayisi,
+    boy,
+    kilo,
+    seciliCinsiyet
+  ];*/
 
   Column buildOutlinedButton(String title, int param) {
     return Column(
@@ -93,6 +104,7 @@ class _InputPageState extends State<InputPage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Expanded(
+            flex: 2,
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -109,6 +121,7 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: MyWidget(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +144,6 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                   Slider(
-                    value: yapilanSporunGunSayisi,
                     onChanged: (double gunSayisi) {
                       setState(() {
                         yapilanSporunGunSayisi = gunSayisi;
@@ -139,6 +151,7 @@ class _InputPageState extends State<InputPage> {
                     },
                     min: 0,
                     max: 7,
+                    value: yapilanSporunGunSayisi,
                     label: '${yapilanSporunGunSayisi.toInt()}',
                     divisions: 7,
                   )
@@ -147,6 +160,7 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: MyWidget(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -169,14 +183,14 @@ class _InputPageState extends State<InputPage> {
                     ),
                   ),
                   Slider(
-                    onChanged: (double value) {
+                    onChanged: (double sigaraSayisi) {
                       setState(() {
-                        sigaraAdet = value;
+                        sigaraAdet = sigaraSayisi;
                       });
                     },
-                    value: sigaraAdet,
                     min: 0,
                     max: 40,
+                    value: sigaraAdet,
                     divisions: 40,
                     label: '${sigaraAdet.toInt()}',
                   ),
@@ -185,6 +199,7 @@ class _InputPageState extends State<InputPage> {
             ),
           ),
           Expanded(
+            flex: 2,
             child: Row(
               children: <Widget>[
                 Expanded(
@@ -223,6 +238,30 @@ class _InputPageState extends State<InputPage> {
                   ),
                 ),
               ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: ButtonTheme(
+              height: 100,
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, Result.routhName,
+                      arguments: UserData(
+                        boy: boy,
+                        kilo: kilo,
+                        sigaraAdet: sigaraAdet,
+                        yapilanSporunGunSayisi: yapilanSporunGunSayisi,
+                        seciliCinsiyet: seciliCinsiyet,
+                      ));
+                },
+                child: Text('Hesapla'),
+                style: ElevatedButton.styleFrom(
+                  primary: Colors.yellow,
+                  onPrimary: Colors.blue,
+                  //textStyle: TextStyle(fontSize: 14),
+                ),
+              ),
             ),
           ),
         ],
